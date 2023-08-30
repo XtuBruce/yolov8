@@ -1,0 +1,14 @@
+# 一步到位构建训练镜像
+FROM nvcr.io/nvidia/pytorch:22.07-py3
+
+COPY yolo2trt /yolo2trt
+COPY models /models
+COPY ultralytics /ultralytics
+COPY SpeedML_yolov8 /SpeedML
+
+WORKDIR /ultralytics
+RUN python setup.py build && python setup.py install
+RUN pip install -r /SpeedML/requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
+
+WORKDIR /workspace
+ENTRYPOINT /SpeedML/train.sh

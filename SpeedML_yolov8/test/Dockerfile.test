@@ -1,0 +1,24 @@
+# 分两步构建训练镜像
+# 第一步：利用基础镜像构建训练、转换环境镜像
+#FROM nvcr.io/nvidia/pytorch:22.07-py3
+#
+#COPY yolo2trt /yolo2trt
+#COPY models /models
+#COPY ultralytics /ultralytics
+#COPY SpeedML_yolov8 /SpeedML
+#
+#WORKDIR /ultralytics
+#RUN python setup.py build && python setup.py install
+#RUN pip install -r /SpeedML/requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
+#RUN rm -r /SpeedML /ultralytics
+#WORKDIR /workspace
+
+# 第二步：
+FROM mirrors.speedbot.net/speedml_ai_base/yolov8:v1.0
+
+COPY ultralytics /ultralytics
+COPY SpeedML_yolov8 /SpeedML
+
+WORKDIR /workspace
+
+ENTRYPOINT /SpeedML/test.sh

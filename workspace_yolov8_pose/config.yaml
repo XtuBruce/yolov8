@@ -1,0 +1,10 @@
+num_classes: 1
+classes_name: ['welding seam']
+keypoint_class: ['welding point']
+kpt_shape: [1, 3]
+batch_size: 1  # Number of images per batch across all machines.
+learning_rate: 0.01
+epochs: 20
+save_period: -1  # 保存模型的间隔次数
+img_size: 640
+model_size: n
